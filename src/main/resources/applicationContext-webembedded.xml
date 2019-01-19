@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!--<bean id="CheckOutServiceContractDailyScheduled" class="vn.hathanhtelecom.hryotel.jobs.scheduled.CheckOutServiceContractDailyScheduled"/>-->
+    <!--<bean id="CheckBirthdayScheduled" class="vn.hathanhtelecom.hryotel.jobs.scheduled.CheckBirthdayScheduled"/>-->
+    <!--<bean id="CheckOutContractScheduled" class="vn.hathanhtelecom.hryotel.jobs.scheduled.CheckOutContractScheduled"/>-->
+
+    <!--<bean id="moQueue" class="java.util.concurrent.ConcurrentLinkedQueue" scope="singleton"/>-->
+    <!--<bean id = "moQueueNotifier" class="java.lang.Object" scope="singleton"/>-->
+
+    <!--<bean id="mtQueue" class="java.util.concurrent.ConcurrentLinkedQueue" scope="singleton"/>-->
+    <!--<bean id = "mtQueueNotifier" class="java.lang.Object" scope="singleton"/>-->
+
+    <beans profile="Development">
+
+        <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <property name="host"  value="${mail.smtp.host}" />
+            <property name="port"  value="${mail.smtp.port}"/>
+            <!-- <property name="protocol" value="smtp"/> -->
+            <property name="username" value="${mail.smtp.username}"/>
+            <property name="password" value="${mail.smtp.password}"/>
+            <property name="defaultEncoding" value="UTF-8"/>
+
+            <property name="javaMailProperties">
+                <props>
+                    <prop key="mail.smtp.auth">true</prop>
+                    <prop key="mail.smtp.starttls.enable">true</prop>
+                    <!-- <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop> -->
+                    <prop key="mail.debug">false</prop>
+                    <!-- <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> -->
+                </props>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="Production">
+
+        <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <property name="host"  value="${mail.smtp.host}" />
+            <property name="port"  value="${mail.smtp.port}"/>
+            <property name="username" value="${mail.smtp.username}"/>
+            <property name="password" value="${mail.smtp.password}"/>
+            <property name="defaultEncoding" value="UTF-8"/>
+            <property name="javaMailProperties">
+                <props>
+                    <prop key="mail.smtp.auth">true</prop>
+                    <!-- <prop key="mail.smtp.starttls.enable">true</prop> -->
+                    <prop key="mail.debug">false</prop>
+                </props>
+            </property>
+        </bean>
+    </beans>
+</beans>

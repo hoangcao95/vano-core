@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Trang chủ</title>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <!-- Breadcrumb menu -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <ol class="breadcrumb breadcrumb-custom">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/home/index.html}" data-toggle="tooltip" title="Trang chủ">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <span>
+                                <a th:href="@{/account/index.html}" data-toggle="tooltip" title="Quản lý tài khoản">Quản lý tài khoản</a>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Quản lý tài khoản</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div id="successMessage" th:class="${successMessage != null and #strings.startsWith(successMessage,'ERROR:')} ? 'alert alert-error' : 'alert alert-success'"
+                             th:if="${successMessage}" th:text="${successMessage != null and successMessage != ''} ? ${#strings.replace(successMessage,'ERROR:','')} : ''"></div>
+                        <div th:if="${ACTION != null and ACTION == 'ADD'}" class="x_content">
+                            <form th:object="${account}" th:action="@{/account/create.html}" method="POST" class="frmMain">
+                                <!--<div id="errorMessage" class="alert alert-danger" style="text-align:left; color: red; font-weight: bold; font-size: 13px;" th:each="err: ${#fields.errors('*')}" th:text="${err}"></div>-->
+                                <!-- ROW 1-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!-- COLUMN 1.1-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Họ tên</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- COLUMN 1.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="text" name="fullName" th:field="*{fullName}" maxlength="50" placeholder="Họ tên"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- COLUMN 1.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Ngày sinh</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- COLUMN 1.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="date" name="dateOfBirth" th:field="*{dateOfBirth}" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- ROW 2-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!--COLUMN 2.1-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Giới tính</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <select name="gender" class="form-control selectpicker" th:field="*{gender}">
+                                                    <option value="0" >Nữ</option>
+                                                    <option value="1" >Nam</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Mật khẩu</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- COLUMN 2.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="password" name="password" th:field="*{password}" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ROW 3-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!-- COLUMN 3.1-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Email</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- COLUMN 3.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="text" name="email" th:field="*{email}" maxlength="50" placeholder="Email"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- COLUMN 3.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Phân quyền</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 3.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <label class="line-height-34" th:each="role : ${lstAllRole}" th:title="${role.description}">
+                                                    <input th:field="*{roles}" type="checkbox" th:value="${role.id}" style="position: inherit;opacity: 0.5;" checked/>
+                                                    <span style="color: #0e90d2" class="lbl_chkbox" th:text="${role.description}"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ROW 4-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!-- COLUMN 4.1-->
+                                    <!--<div class="col-lg-1 col-xs-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="line-height-34">Giới tính</label>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!-- COLUMN 4.2-->
+                                    <!--<div class="col-lg-5 col-xs-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<div>-->
+                                                <!--<select name="gender" class="form-control selectpicker" th:field="*{gender}">-->
+                                                    <!--<option value="0" >Nữ</option>-->
+                                                    <!--<option value="1" >Nam</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!-- COLUMN 4.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Tên đăng nhập</label>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- COLUMN 4.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="text" name="userName" th:field="*{userName}" maxlength="20" placeholder="Tên đăng nhập"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <!-- ROW 5-->
+                                <div class="col-lg-12 col-xs-12 btn-submit-form align-center">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-submit btn-width100">ADD NEW</button>
+                                        <a th:href="@{/account/clear.html}" class="btn btn-warning btn-width100">CLEAR</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- FORM UPDATE -->
+                        <div th:if="${ACTION != null and ACTION == 'UPDATE'}" class="x_content">
+                            <form th:object="${account}" th:action="@{/account/update.html}" method="POST" class="frmMain">
+                                <!--<div id="errorMessage" class="alert alert-danger" style="text-align:left; color: red; font-weight: bold; font-size: 13px;" th:each="err: ${#fields.errors('*')}" th:text="${err}"></div>-->
+                                <!-- ROW 1-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!-- COLUMN 1.1-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Họ tên</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 1.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="text" name="fullName" th:field="*{fullName}" maxlength="50" placeholder="Họ tên"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 1.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Email</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 1.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="text" name="email" th:field="*{email}" maxlength="50" placeholder="Email"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ROW 2-->
+                                <div class="col-lg-12 col-xs-12">
+
+                                    <!-- COLUMN 2.2-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Giới tính</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <select name="gender" class="form-control selectpicker" th:field="*{gender}">
+                                                    <option value="0" >Nữ</option>
+                                                    <option value="1" >Nam</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Phân quyền</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <label class="line-height-34" th:each="role : ${lstAllRole}" th:title="${role.description}">
+                                                    <input th:field="*{roles}" type="checkbox" th:value="${role.id}" style="position: inherit;opacity: 0.5;" checked/>
+                                                    <span style="color: #0e90d2" class="lbl_chkbox" th:text="${role.description}"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ROW 3-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!-- COLUMN 3.1-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Ngày sinh</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 3.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="date" name="dateOfBirth" th:field="*{dateOfBirth}" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 3.3-->
+
+                                    <!-- COLUMN 3.4-->
+                                </div>
+                                <!-- ROW 4-->
+                                <div class="col-lg-12 col-xs-12 btn-submit-form align-center">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-submit btn-width100">UPDATE</button>
+                                        <a th:href="@{/account/clear.html}" class="btn btn-warning btn-width100">CLEAR</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Danh sach-->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Danh sách tài khoản</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div>
+                                <table class="table table-responsive table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Họ tên</th>
+                                        <th>Trạng thái</th>
+                                        <th>Sửa</th>
+                                        <th>Xóa</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${page.content}">
+                                    <tr th:each="eachRow, iterStat : ${page.content}">
+                                        <td th:text="${iterStat.count}" data-title="STT"></td>
+                                        <td th:text="${eachRow.userName}" data-title="Tên đăng nhập"></td>
+                                        <td th:text="${eachRow.fullName}" data-title="Họ tên"></td>
+                                        <td data-title="Trạng thái">
+                                            <span class="btn btn-success" th:if="${eachRow.status}== 1">ACTIVE</span>
+                                            <span class="btn btn-warning" th:if="${eachRow.status}== 0">DEACTIVE</span>
+                                        </td>
+                                        <td class="text-center" data-title="Sửa">
+                                            <a th:href="@{/account/update.html/{id}(id=${eachRow.id})}" data-toggle="tooltip" title="Sửa">
+                                                <button id="update" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>
+                                            </a>
+                                        </td>
+                                        <td class="text-center" data-title="Xóa">
+                                            <a th:href="@{/account/delete.html/{id}(id=${eachRow.id})}" data-toggle="tooltip" title="Xóa">
+                                                <button class="btn btn-info btn-circle"><i class="glyphicon glyphicon-trash"></i></button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Number Page-->
+                    <content th:replace="fragments/panigator :: content(page = ${page})"></content>
+                </div>
+            </div>
+        </div>
+        <content th:replace="fragments/footer :: content"></content>
+    </div>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $(document).ready(function () {
+        $('.frmMain').bootstrapValidator({
+            feedbackIcons: {
+                valid: '',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                userName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Tên đăng nhập chưa nhập'
+                        }
+                    }
+                },
+                fullName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Họ tên chưa nhập'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Email chưa nhập'
+                        }
+                    }
+                }
+            }
+        })
+    })
+</script>
+<script language="javascript">
+
+    // document.getElementById("update").onclick = function () {
+    //     document.getElementById("createUser").style.display = "hidden";
+    //     document.getElementById("updateUser").style.display = "block";
+    // };
+
+</script>
+</body>
+</html>

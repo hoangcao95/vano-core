@@ -1,0 +1,29 @@
+.breadcrumb > .active span {
+  font-weight: bold;
+    color: black;
+}
+
+.align-center {
+  text-align: center;
+}
+.line-height-34 {
+  line-height: 34px;
+}
+.btn-width60 {
+  width: 60px;
+}
+.btn-width70 {
+  width: 70px;
+}
+.btn-width80 {
+  width: 80px;
+}
+.btn-width90 {
+  width: 90px;
+}
+.btn-width100 {
+  width: 100px;
+}
+.lbl_chkbox {
+  padding-right: 15px;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Trang chủ</title>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <!-- Breadcrumb menu -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <ol class="breadcrumb breadcrumb-custom">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/home/index.html}" data-toggle="tooltip" title="Trang chủ">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <span>TOPUP theo danh sách</span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row" id="panel-table">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>COMMAND</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form th:object="${topup}" th:action="@{/topup/topup.html}" method="POST">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>Số thuê bao</label>
+                                        <div>
+                                            <input class="form-control" type="text" placeholder="" name="msisdn" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Số tiền</label>
+                                        <div>
+                                            <input class="form-control" type="text" placeholder="" name="amount" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 btn-submit-form">
+                                    <div class="form-group ">
+                                        <button type="submit" class="btn btn-info">TOPUP</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <content th:replace="fragments/footer :: content"></content>
+    </div>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Login</title>
+</head>
+<body class="login">
+<div>
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form role="form" action="/login.html" th:action="@{/login.html}" method="POST">
+                    <h1>CMS</h1>
+                    <p th:if="${error}" style="color: crimson">Sai tên đăng nhập hoặc mật khẩu</p>
+                    <div>
+                        <input type="text" name="j_username" class="form-control" placeholder="Username" required="" />
+                    </div>
+                    <div>
+                        <input type="password" name="j_password" class="form-control" placeholder="Password" required="" />
+                    </div>
+                    <div>
+                        <button class="btn btn-submit " type="submit">Đăng nhập</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="separator">
+                        <br/>
+                        <div>
+                            <p>Copyright © 2018.</p>
+                            <img alt="" th:src="@{/resources/image/yotel-logo-2.png}"/>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

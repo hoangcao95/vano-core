@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật tài khoản</title>
+    <content th:replace="fragments/init :: head"></content>
+    <style>
+        #errorMessage {
+            padding: 11px;
+        }
+
+        .btn-submit-form {
+            margin-left: 42%;
+        }
+    </style>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Cập nhật tài khoản - <span style="color: red" th:text="*{user.fullName}"></span></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form class="registerForm" th:object="${user}" th:action="@{/account/update/{id}/user_update.html(id=${user.id})}" method="POST">
+                                <div class="alert alert-danger" id="errorMessage"
+                                     style="text-align:left; color: white; font-weight: bold; font-size: 13px;"
+                                     th:each="err: ${#fields.errors('*')}" th:text="${err}"></div>
+                                <input type="hidden" name="user_id" id="user_id" th:value="*{id}"/>
+                                <div class="col-lg-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Tên đầy đủ</label>
+                                            <input class="form-control" type="text" id="form-field-fullname" name="fullName" th:field="*{fullName}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Giới tính</label>
+                                        <div>
+                                            <select data-live-search-style="startsWith"
+                                                    class="selectpicker form-control" id="form-field-gender" th:field="*{gender}">
+                                                <option value="0">Nam</option>
+                                                <option value="1">Nữ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >Email</label>
+                                            <input class="form-control" type="text" id="form-field-email" name="email" th:field="*{email}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-label">Tên đăng nhập</label>
+                                            <input class="form-control" type="text" id="form-field-username" name="userName" th:field="*{userName}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label >Xác minh tài khoản</label>
+                                        <div>
+                                            <select data-live-search-style="startsWith"
+                                                    class="selectpicker form-control" id="form-field-verify" th:field="*{isVerified}">
+                                                <option value="0">Đã xác minh</option>
+                                                <option value="1">Chưa xác minh</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Trạng thái</label>
+                                        <div>
+                                            <select data-live-search-style="startsWith"
+                                                    class="selectpicker form-control" id="form-field-status" th:field="*{status}">
+                                                <option value="0">Active</option>
+                                                <option value="1">Block</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Loại tài khoản</label>
+                                        <div>
+                                            <select data-live-search-style="startsWith"
+                                                    class="selectpicker form-control" id="form-field-userType" th:field="*{userType}">
+                                                <option value="0">Telcos</option>
+                                                <option value="1">Org</option>
+                                                <option value="2">Partner</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Phân quyền Role</label>
+                                        <div>
+                                            <label th:each="role : ${allRoles}" th:title="${role.description}">
+                                                <input th:field="*{roles}" type="checkbox" th:value="${role.id}"
+                                                       style="position: inherit;opacity: 0.5;" checked/>
+                                                <span style="color: #0e90d2" class="lbl" th:text="${role.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 btn-submit-form">
+                                    <div class="form-group ">
+                                        <button type="submit" class="btn btn-info">Cập nhật</button>
+                                        <a th:href="@{/account/user_list.html?page={pageIdx}(pageIdx=${session.pageIndex})}" class="btn btn-warning">Bỏ qua</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-6 -->
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+    <content th:replace="fragments/footer :: content"></content>
+</div>
+<content th:replace="fragments/init :: script"></content>
+
+<script>
+    $(document).ready(function () {
+        $('.registerForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Địa chỉ email bắt buộc phải nhập'
+                        },
+                        emailAddress: {
+                            message: 'Địa chỉ email không đúng định dạng'
+                        }
+                    }
+                },
+                userName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Username bắt buộc phải nhập '
+                        },
+                        regexp: {
+                            regexp: /^[a-z0-9]+$/,
+                            message: 'Username là các ký tự thường, chữ số'
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 5,
+                            message: 'Username có độ dài nhỏ hơn 5 kí tự'
+                        }
+                    }
+                }
+            }
+        })
+    })
+
+</script>
+
+<script type="text/javascript">
+    $("#errorMessage").hide().fadeIn(0).delay(1500).fadeOut(700);
+</script>
+
+</body>
+
+</html>

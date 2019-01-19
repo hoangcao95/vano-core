@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Trang chủ</title>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <!--<div class="row">-->
+                <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                    <!--<div class="x_panel">-->
+                        <!--<div class="x_title">-->
+                            <!--<h2>Danh sách tiến trình</h2>-->
+                            <!--<div class="clearfix"></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+            <!-- Table -->
+            <div class="row" id="panel-table">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>DANH SÁCH TIẾN TRÌNH</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div>
+                                <table class="table table-responsive table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>THREAD ID/ NAME</th>
+                                        <th>STATE</th>
+                                        <th>INFO</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${threads} != null">
+                                    <tr th:each="oneThread, iterStat : ${threads}">
+                                        <td>
+                                            <a href="#" th:href="@{/thread/list.html}" th:text="${iterStat.count}">1</a>
+                                        </td>
+                                        <td >
+                                            <h4 style="color: red; font-weight: bold" th:text="${oneThread.id}">ID</h4>
+                                            <p th:text="${oneThread.name}">Name</p>
+                                        </td>
+                                        <td>
+                                            <span class="btn btn-success" th:if="${oneThread.status} == true" th:text="Running">Running</span>
+                                            <span class="btn btn-warning" th:if="${oneThread.status} == false" th:text="Stopped">Stopped</span>
+                                        </td>
+                                        <td th:switch="${#strings.toString(oneThread.state)}">
+                                            <span th:case="0" class="btn btn-info">Normal</span>
+                                            <span th:case="1" class="btn btn-info">Info</span>
+                                            <span th:case="2" class="btn btn-warning">Warn</span>
+                                            <span th:case="3" class="btn btn-danger">Error</span>
+                                            <span th:case="4" class="btn btn-success">Idle</span>
+                                        </td>
+
+                                        <td>
+                                            <a type="button" class="btn btn-danger" th:if="${oneThread.status} == true" href="#" th:href="@{/thread/{id}/stop.html(id=${oneThread.id})}"><i class="fa fa-power-off"></i> Stop</a>
+                                            <a type="button" class="btn btn-primary" th:if="${oneThread.status} == false" href="#" th:href="@{/thread/{id}/start.html(id=${oneThread.id})}"><i class="fa fa-power-off"></i> Start</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <content th:replace="fragments/footer :: content"></content>
+    </div>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+</body>
+</html>

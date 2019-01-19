@@ -1,0 +1,189 @@
+#successMessage, #errorMessage, #warningMessage {
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+
+#successMessageWrapper, #errorMessageWrapper, #warningMessageWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.alert {
+    padding: 10px 10px;
+}
+
+.messageError {
+    color: red;
+}
+
+.messageSuccess {
+    color: blue;
+}
+
+#totalRow {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+#panel-body-wrapper {
+    position: relative;
+    display: block;
+    border: 1px dotted darkgrey;
+    margin: 15px;
+    width: auto;
+}
+
+#infoTab label {
+    padding-right: 5px;
+}
+
+#infoTab table tr td {
+    padding-top: 20px !important;
+    vertical-align: top !important;
+}
+
+#infoTab table {
+    margin: 0 auto;
+}
+
+.ui-autocomplete {
+    height: 400px !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    background: white !important;
+    box-shadow: 5px 5px 5px 5px darkgrey;
+    border: 1px solid darkgrey;
+    border-radius: 0 15px 15px 0;
+    max-width: 400px !important;
+}
+
+#codeManager {
+    height: 30px !important;
+    padding: 5px 12px !important;
+}
+
+#codeManagerLblWrapper {
+    padding-right: 0 !important;
+}
+
+#codeManagerLbl {
+    padding-top: 6px;
+}
+
+.form-group {
+    margin-bottom: 15px !important;
+}
+
+.nav-tabs li a {
+    padding: 8px;
+    color: white;
+}
+
+.nav-tabs, ul, li {
+    margin: 0;
+    border: 0;
+}
+
+.nav-tabs li a:hover {
+    color: #555;
+}
+
+#memberTab > .form-group {
+    margin: 15px 10px 15px 10px;
+}
+
+.ui-menu-item-wrapper {
+    border: none !important;
+    color: black !important;
+    background: none !important;
+    font-weight: unset !important;
+    padding: 2px 7px !important;
+    display: block;
+}
+
+.ui-menu-item, .ui-menu-item-wrapper:hover {
+    cursor: pointer;
+}
+
+#ui-id-1 {
+    padding: 0;
+}
+
+.ui-menu-item {
+    background: white !important;
+    font-size: small !important;
+    width: auto;
+}
+
+.ui-menu-item:hover .ui-menu-item-wrapper {
+    border: none !important;
+    background: none !important;
+    color: white !important;
+}
+
+.ui-menu-item:hover {
+    border: none !important;
+    background: #4FA3EC !important;
+}
+
+.table > tbody > tr > td {
+    vertical-align: unset !important;
+}
+
+#tableInfo {
+    width: 100%;
+}
+
+#tableInfo tr td {
+    padding-bottom: 15px !important;
+}
+
+#groupButton {
+    width: auto;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#groupButtonWrapper {
+    position: relative;
+    left: -50%;
+    width: 178px;
+}
+
+#tableInfo tr td {
+    vertical-align: top;
+}
+
+
+#panelInfo {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#tableWrapper {
+    max-height: 521px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    display: block;
+}
+
+#tableAdd {
+    width: 99.9%;
+}
+
+tr td {
+    padding: 6px !important;
+}
+
+#btnSubmit {
+    margin-right: 15px;
+}
+
+.pagination {
+    margin: 0;
+}
+
+#leaderDiv {
+    margin-right: 15px;
+}

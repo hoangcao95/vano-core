@@ -1,0 +1,53 @@
+<content th:fragment="content" th:remove="tag">
+    <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+                <a th:href="@{/home/index.html}" class="site_title">
+                    <img th:src="@{/resources/image/yotel-logo.png}" alt="..." class="img-circle profile_img"/>
+                    <span style="margin-left: 10px;font-family: 'Segoe UI';font-size:20px">CMS<span style="font-size: 4px"></span></span></a>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <div class="menu_section">
+                    <ul class="nav side-menu">
+                        <li>
+                            <a th:href="@{/home/index.html}" style="margin-bottom: 0"><i class="fa fa-home"></i>Trang chủ</a>
+                        </li>
+                        <li sec:authorize="hasAnyAuthority('SADMIN')">
+                            <a><i class="fa fa-gears"></i>Hệ thống<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a th:href="@{/thread/list.html}">Quản lý tiến trình</a></li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN','TOPUP')">
+                            <a><i class="fa fa-gears"></i>Quản lý TOPUP<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a th:href="@{/topup/index.html}">TOPUP đơn lẻ</a></li>
+                                <li sec:authorize="hasAnyAuthority('SADMIN')"><a th:href="@{/topup/by-file.html}">TOPUP theo danh sách</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a><i class="fa fa-user"></i>Tài khoản<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li sec:authorize="hasAnyAuthority('SADMIN')"><a th:href="@{/account/index.html}">Quản lý tài khoản</a></li>
+                                <li><a th:href="@{/account/change_password.html}">Đổi mật khẩu</a></li>
+                                <li><a th:href="@{/logout.html}">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN')">
+                            <a><i class="fa fa-usd"></i>Quản lý dịch vụ<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li>
+                                    <a th:href="@{/service/service_list.html}">Danh sách</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /sidebar menu -->
+        </div>
+    </div>
+</content>

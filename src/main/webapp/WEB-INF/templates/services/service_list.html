@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Danh sách dịch vụ</title>
+    <content th:replace="fragments/init :: head"></content>
+    <style>
+        #not_found_message {
+            padding: 11px;
+        }
+
+        .btn-add-new {
+            margin-top: -7px;
+            margin-right: -1px;
+        }
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+
+    </style>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Tùy chọn tìm kiếm</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <input type="hidden" name="code" th:value="${code}">
+                            <input type="hidden" name="name" th:value="${name}">
+                            <input type="hidden" id="contextPath" th:value="@{/}">
+                            <form role="form" th:action="@{/service/service_list.html}" method="GET">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-6">
+                                        <label>Mã dịch vụ</label>
+                                        <input class="form-control" type="text" placeholder="Mã tài sản" name="code" th:value="${code}">
+                                    </div>
+                                    <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-6">
+                                        <label>Tên dịch vụ</label>
+                                        <input class="form-control" type="text" placeholder="Tên tài sản" name="name" th:value="${name}">
+                                    </div>
+
+                                    <div class="col-lg-2 col-xs-12 col-sm-4 col-xs-6">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" id="btnSearch" class="btn btn-submit">Tìm kiếm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> <!--START CLASS ROW-->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div id="successMessage" th:class="${successMessage != null and #strings.startsWith(successMessage,'ERROR:')} ? 'alert alert-error' : 'alert alert-success'"
+                         th:if="${successMessage}" th:text="${successMessage != null and successMessage != ''} ? ${#strings.replace(successMessage,'ERROR:','')} : ''"></div>
+                    <div class="alert alert-danger" id="not_found_message"
+                         th:if="${not #strings.isEmpty(not_found_message)}" th:text="${not_found_message}" style="color: white">
+                    </div>
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Danh sách dịch vụ</h2>
+                            <div class="pull-right btn-add-new">
+                                <a data-toggle="tooltip" title="Thêm Mới Tài Sản" th:href="@{/service/service_add.html}"
+                                   class=" btn btn-submit "><i class="fa fa-plus"></i> Thêm Mới</a>
+                                <!--title="" in <a> necessary for mobile responsive-->
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div>
+                                <table class="table table-responsive table-striped table-bordered table-hover">
+                                    <!--class = "table-responsive" necessary for responsive mobile-->
+                                    <thead>
+                                    <tr>
+                                        <th >Stt</th>    <!--STT-->
+                                        <th >Mã dịch vụ</th>
+                                        <th >Tên dịch vụ</th>
+                                        <th >Mô tả</th>
+                                        <th >Trạng thái</th>
+                                        <th>Sửa</th>
+                                        <th>Xóa</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${page.getContent()}!=null">
+                                    <tr th:each="eachRow,iterStat :${page}">
+                                        <td  th:text="${iterStat.count}" data-title="STT"></td>
+                                        <td  data-title="Mã tài sản">
+                                            <span th:if="*{eachRow.code}" th:text="*{eachRow.code}"></span>
+                                        </td>
+                                        <td  data-title="Tên tài sản">
+                                            <span th:if="*{eachRow.name}" th:text="*{eachRow.name}"></span>
+                                        </td>
+                                        <td  data-title="Mô tả">
+                                            <span th:if="*{eachRow.description}" th:text="*{eachRow.description}"></span>
+                                        </td>
+                                        <td data-title="Trạng thái">
+                                            <span class="btn btn-success" th:if="${eachRow.status}== 1">ACTIVE</span>
+                                            <span class="btn btn-warning" th:if="${eachRow.status}== 0">DEACTIVE</span>
+                                        </td>
+                                        <td class="text-center" data-title="Sửa"> <!--SỬA THÔNG TIN-->
+                                            <a th:href="@{/service/service-edit.html/{id}(id=${eachRow.getId()})}"
+                                               data-toggle="tooltip" title="Chỉnh Sửa">
+                                                <button class="btn btn-info btn-circle"><i class="fa fa-edit"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td class="text-center" data-title="Xóa">  <!--XÓA THÔNG TIN-->
+                                            <a data-toggle="tooltip" title="Xóa Bỏ" type="button"
+                                               class="btn btn-warning btn-circle"
+                                               th:onclick="'deleteConfirm(\''+${eachRow.getId()}+'\')'"><i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="table_empty" th:if="${#lists.isEmpty(page.getContent())}">
+                                        <td colspan="14">Danh sách rỗng!</td>
+                                    </tr>
+                                    </tbody>
+                                </table> <!--END TABLE-->
+                            </div> <!--TABLE RESPONSE-->
+                        </div> <!--END PANEL BODY-->
+                    </div>     <!--END PANEL INFO-->
+
+                    <content th:replace="fragments/panigator :: content(page = ${page})"></content>
+                </div>  <!--END COL-LG-12-->
+            </div><!--END CLASS ROW-->
+        </div>
+    </div>
+    <content th:replace="fragments/footer :: content"></content>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script type="text/javascript">
+    function deleteConfirm(id) {
+        BootstrapDialog.show({
+            title: 'Xác nhận xóa bỏ',
+            message: 'Bạn có chắc chắn muốn xóa không ? Bấm Delete để xác nhận.',
+            buttons: [{
+                label: 'Bỏ qua',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Delete',
+                cssClass: 'btn-primary',
+                action: function (dialogItself) {
+                    var reqUrl = $('#contextPath').val() + "asset/delete/" + id;
+                    $.ajax({
+                        url: reqUrl,
+                        method: 'GET',
+                        data: {
+                            'id': id
+                        },
+                        success: function (response) {
+
+                        }
+                    }).always(function (ketqua) {
+                        window.location.reload();
+                    });
+                }
+            }]
+        });
+    }
+</script>
+
+<script>
+    function copyConfirm(id) {
+        BootstrapDialog.show({
+            title: 'Xác nhận sao chép dữ liệu',
+            message: 'Bạn có muốn sao chép dữ liệu người dùng hiện tại? Bấm Accept để sao chép',
+            buttons: [{
+                label: 'Bỏ qua',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Accept',
+                cssClass: 'btn-primary',
+                action: function (dialogItself) {
+                    var copyUrl = $('#contextPath').val() + "asset/asset-copy.html" + id;
+                    $.ajax({
+                        url: copyUrl,
+                        method: 'GET',
+                        data: {
+                            'id': id
+                        },
+                        success: function (response) {
+
+                        }
+                    }).always(function (ketqua) {
+                        window.location.href = 'asset-copy.html/' + id;
+                    });
+                }
+            }]
+        });
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script type="text/javascript">
+    $("#not_found_message").hide().fadeIn(0).delay(1000).fadeOut(500);
+</script>
+</body>
+</html>

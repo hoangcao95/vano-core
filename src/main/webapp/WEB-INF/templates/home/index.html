@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Trang chủ</title>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <div class="row" id="panel-table">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <!--<div class="x_title">-->
+                            <!--<h2>COMMAND</h2>-->
+                            <!--<div class="clearfix"></div>-->
+                        <!--</div>-->
+                        <!--<div class="x_content">-->
+                            <!--<form th:object="${cmd}" th:action="@{/home/command.html}" method="POST">-->
+                                <!--<div class="col-xs-12">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>COMMAND</label>-->
+                                        <!--<div>-->
+                                            <!--<input class="form-control" type="text" placeholder="" name="commandCode" th:field="*{commandCode}"/>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-12 btn-submit-form">-->
+                                    <!--<div class="form-group ">-->
+                                        <!--<button type="submit" class="btn btn-info">SEND</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                        HỆ THỐNG CMS
+                    </div>
+                </div>
+            </div>
+        </div>
+        <content th:replace="fragments/footer :: content"></content>
+    </div>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+</body>
+</html>

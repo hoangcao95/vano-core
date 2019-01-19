@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Lựa chọn dữ liệu</title>
+</head>
+<style>
+    .check{
+        margin-left: 77%;
+    }
+</style>
+
+<body class="login">
+<div>
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form role="form" th:action="@{/account/switch-account.html}" method="POST">
+                    <h1>Lựa Chọn Công Ty</h1>
+                    <div class="form-group">
+                        <select class="form-control selectpicker" name="companyId" th:value="${companyId}"
+                                id="companySelect">
+                            <option value="0" sec:authorize="hasAnyAuthority('Administrators')">Tất cả</option>
+                            <option th:each="item:${listTemp}"
+                                    th:value="${item.id}" th:attr="selected =${companyId}==${item.id} ? 'selected'"
+                                    th:text="${item.code}">
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="check">
+                            <button class="btn btn-submit btn-ok " type="submit">&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="separator">
+                        <br/>
+                        <div>
+                            <p>©2017 - 2018 All Rights Reserved. Privacy and Terms by Yotel Corp.</p>
+                            <img alt="" th:src="@{/resources/image/yotel-logo-2.png}"/>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+<content th:replace="fragments/init :: script"></content>
+
+</body>
+</html>
+

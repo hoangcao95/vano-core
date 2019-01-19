@@ -1,0 +1,37 @@
+<content th:fragment="content" th:remove="tag">
+    <div th:if="${not #lists.isEmpty(page.content)}" class="panigation-wrapper">
+        <div class="pagination pull-right no-margin" id="pagination-right">
+            <ul class="pagination">
+                <li class="first" style="cursor: pointer" th:if="${not page.first}">
+                    <a onclick="panigator.goToPageUrl(0)">First </a>
+                </li>
+                <!--   HIỂN THỊ SỐ TRANG -->
+                <th:block th:each="pageNumber : ${#numbers.sequence(page.number - 5, page.number + 5)}">
+                    <li class="active" style="cursor: pointer"
+                        th:if="${pageNumber eq (page.number+1) and pageNumber gt 0 and  pageNumber lt (page.totalPages +1) }">
+                        <a th:onclick="'panigator.goToPageUrl(' + ${pageNumber - 1} + ')'"
+                           th:title="${pageNumber}"
+                           th:text="${pageNumber}"></a>
+                    </li>
+
+                    <li style="cursor: pointer"  th:if="${pageNumber ne (page.number+1) and pageNumber gt 0 and  pageNumber lt (page.totalPages +1) }">
+                        <a th:onclick="'panigator.goToPageUrl(' + ${pageNumber - 1} + ')'"
+                           th:title="${pageNumber}"
+                           th:text="${pageNumber}"></a>
+                    </li>
+                </th:block> <!--   KẾT THÚC SỐ TRANG -->
+                <li class="Last" style="cursor: pointer"  th:if="${not page.last}">
+                    <a th:onclick="'panigator.goToPageUrl(' + ${page.totalPages - 1} + ')'">Last</a>
+                </li>
+            </ul>
+        </div>  <!--END PAGTAGLIB-->
+
+        <div>
+            <div class="pagination pull-left no-margin" id="pagination-left">
+                <span> Showing <span th:text="${(page.number * page.size)+1}"></span> to <span
+                        th:text="${(page.number * page.size)+ page.numberOfElements}"></span>  of
+                <span th:text="${page.totalElements}"></span> entries</span>
+            </div>
+        </div>  <!--END PAGINATION-->
+    </div>
+</content>

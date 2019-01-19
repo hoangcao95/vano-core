@@ -1,0 +1,1 @@
+Copy folder 0.0.1-CORE in file RAR 0.0.1-CORE.rar to m2 path of Maven .m2\repository\vn\yotel\yoframework

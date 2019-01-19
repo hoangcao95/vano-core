@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <content th:replace="fragments/init :: head"></content>
+    <title>Trang chủ</title>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <!-- Breadcrumb menu -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <ol class="breadcrumb breadcrumb-custom">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/home/index.html}" data-toggle="tooltip" title="Trang chủ">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <span>
+                                <a th:href="@{/topup/index.html}" data-toggle="tooltip" title="TOPUP đơn lẻ">TOPUP đơn lẻ</a>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row" id="panel-table">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>TOPUP thuê bao đơn lẻ</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div id="successMessage" th:class="${successMessage != null and #strings.startsWith(successMessage,'ERROR:')} ? 'alert alert-error' : 'alert alert-success'"
+                             th:if="${successMessage}" th:text="${successMessage != null and successMessage != ''} ? ${#strings.replace(successMessage,'ERROR:','')} : ''"></div>
+                        <div class="x_content">
+                            <form th:object="${topup}" th:action="@{/topup/topup.html}" method="POST" class="frmMain">
+                                <div id="errorMessage" class="alert alert-danger" style="text-align:left; color: red; font-weight: bold; font-size: 13px;" th:each="err: ${#fields.errors('*')}" th:text="${err}"></div>
+                                <!-- ROW 1-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <!-- COLUMN 1.1-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Số thuê bao</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 1.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input class="form-control" type="text" name="msisdn" th:field="*{msisdn}" maxlength="15" placeholder="Nhập số thuê bao"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 1.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Số tiền</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 1.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <input id="amountId" class="form-control" type="text" name="amount" th:field="*{amount}" maxlength="6" placeholder="Nhập số tiền"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ROW 2-->
+                                <div class="col-lg-12 col-xs-12">
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Dịch vụ</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.2-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <select name="serviceCode" class="form-control selectpicker" th:field="*{serviceCode}">
+                                                    <option value="VTV" >VTVShowbiz</option>
+                                                    <option value="YM" >Yomi</option>
+                                                    <option value="HL" >Hulaa</option>
+                                                    <option value="IB" >iBid</option>
+                                                    <option value="ILO" >iLoto</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.3-->
+                                    <div class="col-lg-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="line-height-34">Ghi chú</label>
+                                        </div>
+                                    </div>
+                                    <!-- COLUMN 2.4-->
+                                    <div class="col-lg-5 col-xs-12">
+                                        <div class="form-group">
+                                            <div>
+                                                <textarea class="form-control" rows="3" type="text" name="note" th:field="*{note}" placeholder="Viết liền không dấu, cách nhau bằng dấu _"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ROW 3-->
+                                <div class="col-lg-12 col-xs-12 btn-submit-form align-center">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-submit btn-width70">TOPUP</button>
+                                        <a th:href="@{/topup/clear.html}" class="btn btn-warning btn-width70">CLEAR</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <content th:replace="fragments/footer :: content"></content>
+    </div>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function setInputFilter(textbox, inputFilter) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+            textbox.addEventListener(event, function() {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                }
+            });
+        });
+    }
+
+    setInputFilter(document.getElementById("amountId"), function(value) {
+        return /^-?\d*$/.test(value);
+    });
+
+    $(document).ready(function () {
+        $('.frmMain').bootstrapValidator({
+            feedbackIcons: {
+                valid: '',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                msisdn: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Số thuê bao chưa nhập'
+                        }
+                    }
+                },
+                amount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Số tiền chưa nhập'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'Số tiền không đúng định dạng'
+                        }
+                    }
+                },
+                serviceCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Dịch vụ chưa chọn'
+                        }
+                    }
+                },
+                note: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ghi chú chưa nhập'
+                        }
+                    }
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>
