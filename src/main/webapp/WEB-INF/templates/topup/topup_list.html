@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Danh sách Topup</title>
+    <content th:replace="fragments/init :: head"></content>
+    <style>
+        #not_found_message {
+            padding: 11px;
+        }
+
+        .btn-add-new {
+            margin-top: -7px;
+            margin-right: -1px;
+        }
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+
+    </style>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Tùy chọn tìm kiếm</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form id="form1" role="form" method="GET" th:action="@{/topup/topup-list.html}">
+                                <div class="row">
+                                    <input hidden="true" value="0" name="type" />
+                                    <div class="col-lg-3">
+                                        <label>Từ ngày - đến ngày</label>
+                                        <div class="input-prepend input-group">
+                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                            <input type="text" name = "from_date" id = "from_date" hidden="true" th:value="${from_date}"/>
+                                            <input type="text" name = "to_date" id = "to_date" hidden="true"  th:value="${to_date}"/>
+                                            <input type="text" style="width: 100%" name="date_range" id="reservationtime" class="form-control span4"
+                                                   value="08/01/2013 - 08/01/2013" th:value="${from_date} + ' - ' + ${to_date}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label>Số điện thoại:  </label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">+84</span>
+                                            <input class="form-control" type="text" name="msisdn" id="msisdn" th:value="${msisdn}"/>
+                                        </div>
+                                        <label for="msisdn" style="color: red;"></label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" class="btn btn-info">Xem chi tiết</button>
+                                            <a class="btn btn-info" download="sms_info.xls" href="#" onclick="return ExcellentExport.excel(this, 'tblCallsDetail', 'sms info');">Xuất file excel</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> <!--START CLASS ROW-->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-danger" id="not_found_message"
+                         th:if="${not #strings.isEmpty(not_found_message)}" th:text="${not_found_message}" style="color: white">
+                    </div>
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Danh sách Topup</h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div>
+                                <table class="table table-responsive table-striped table-bordered table-hover">
+                                    <!--class = "table-responsive" necessary for responsive mobile-->
+                                    <thead>
+                                    <tr>
+                                        <th >Stt</th>    <!--STT-->
+                                        <th >Số thuê bao</th>
+                                        <th >Mã dịch vụ</th>
+                                        <th >Trạng thái</th>
+                                        <th >Ngày tạo</th>
+                                        <!--<th >Tài khoản</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody th:if="${page.getContent()}!=null">
+                                    <tr th:each="eachRow,iterStat :${page}">
+                                        <td  th:text="${iterStat.count}" data-title="STT"></td>
+                                        <td  data-title="Số thuê bao">
+                                            <span th:if="*{eachRow.msisdn}" th:text="*{eachRow.msisdn}"></span>
+                                        </td>
+                                        <td  data-title="Mã dịch vụ">
+                                            <span th:if="*{eachRow.serviceCode}" th:text="*{eachRow.serviceCode}"></span>
+                                        </td>
+                                        <td  data-title="Trạng thái">
+                                            <span class="btn btn-success" th:if="${eachRow.topupResult}== 'SUCCESS'">SUCCESS</span>
+                                            <span class="btn btn-warning" th:if="${eachRow.topupResult}== 'ERROR'">ERROR</span>
+                                        </td>
+                                        <td data-title="Ngày tạo">
+                                            <span th:if="*{eachRow.createdDate}" th:text="*{eachRow.createdDate}"></span>
+                                        </td>
+                                        <!--<td data-title="Tài khoản">-->
+                                            <!--<span th:if="*{eachRow.createdDate}" th:text="*{eachRow.createdDate}"></span>-->
+                                        <!--</td>-->
+                                    </tr>
+                                    <tr class="table_empty" th:if="${#lists.isEmpty(page.getContent())}">
+                                        <td colspan="14">Danh sách rỗng!</td>
+                                    </tr>
+                                    </tbody>
+                                </table> <!--END TABLE-->
+                            </div> <!--TABLE RESPONSE-->
+                        </div> <!--END PANEL BODY-->
+                    </div>     <!--END PANEL INFO-->
+
+                    <content th:replace="fragments/panigator :: content(page = ${page})"></content>
+                </div>  <!--END COL-LG-12-->
+            </div><!--END CLASS ROW-->
+        </div>
+    </div>
+    <content th:replace="fragments/footer :: content"></content>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tblCallsDetail').dataTable();
+        $('#reservationtime').daterangepicker({
+            timePicker: false,
+            format: 'YYYY/MM/DD'
+        }, function(start, end, label) {
+            console.log('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            $('#from_date').val(start.format('YYYY-MM-DD'));
+            $('#to_date').val(end.format('YYYY-MM-DD'));
+        });
+        $("#form1").validate({
+            errorPlacement: function(error, element) {
+                // Append error within linked label
+                $( element )
+                    .closest( "form" )
+                    .find( "label[for='" + element.attr( "id" ) + "']" )
+                    .append( error );
+            },
+            errorElement: "span",
+            rules: {
+                phone: {
+                    required: true,
+                    minlength: 9,
+                    maxlength: 10,
+                    number: true
+                }
+            },
+            messages: {
+                phone: {
+                    required: " (required a mobile number)",
+                    minlength: " (must be between 9 and 10 numbers)",
+                    maxlength: " (must be between 9 and 10 numbers)",
+                    number: " (must be numbers)"
+                }
+            }
+        });
+
+    });
+</script>
+
+<script>
+    function copyConfirm(id) {
+        BootstrapDialog.show({
+            title: 'Xác nhận sao chép dữ liệu',
+            message: 'Bạn có muốn sao chép dữ liệu người dùng hiện tại? Bấm Accept để sao chép',
+            buttons: [{
+                label: 'Bỏ qua',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Accept',
+                cssClass: 'btn-primary',
+                action: function (dialogItself) {
+                    var copyUrl = $('#contextPath').val() + "asset/asset-copy.html" + id;
+                    $.ajax({
+                        url: copyUrl,
+                        method: 'GET',
+                        data: {
+                            'id': id
+                        },
+                        success: function (response) {
+
+                        }
+                    }).always(function (ketqua) {
+                        window.location.href = 'asset-copy.html/' + id;
+                    });
+                }
+            }]
+        });
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script type="text/javascript">
+    $("#not_found_message").hide().fadeIn(0).delay(1000).fadeOut(500);
+</script>
+</body>
+</html>
