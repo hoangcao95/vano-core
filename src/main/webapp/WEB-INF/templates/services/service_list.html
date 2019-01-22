@@ -46,7 +46,7 @@
                             <input type="hidden" name="code" th:value="${code}">
                             <input type="hidden" name="name" th:value="${name}">
                             <input type="hidden" id="contextPath" th:value="@{/}">
-                            <form role="form" th:action="@{/service/service_list.html}" method="GET">
+                            <form role="form" th:action="@{/service/service-list.html}" method="GET">
                                 <div class="row">
                                     <div class="col-lg-2 col-sm-12 col-sm-4 col-xs-6">
                                         <label>Mã dịch vụ</label>
@@ -81,7 +81,7 @@
                         <div class="x_title">
                             <h2>Danh sách dịch vụ</h2>
                             <div class="pull-right btn-add-new">
-                                <a data-toggle="tooltip" title="Thêm Mới Tài Sản" th:href="@{/service/service_add.html}"
+                                <a data-toggle="tooltip" title="Thêm Mới Tài Sản" th:href="@{/service/service-add.html}"
                                    class=" btn btn-submit "><i class="fa fa-plus"></i> Thêm Mới</a>
                                 <!--title="" in <a> necessary for mobile responsive-->
                             </div>
@@ -125,8 +125,8 @@
                                                 </button>
                                             </a>
                                         </td>
-                                        <td class="text-center" data-title="Xóa">  <!--XÓA THÔNG TIN-->
-                                            <a data-toggle="tooltip" title="Xóa Bỏ" type="button"
+                                        <td  class="text-center" data-title="Xóa">  <!--XÓA THÔNG TIN-->
+                                            <a style="text-align: center" th:style="${eachRow.status}== 1 ? 'display:block' : 'display:none'" data-toggle="tooltip" title="Xóa Bỏ" type="button"
                                                class="btn btn-warning btn-circle"
                                                th:onclick="'deleteConfirm(\''+${eachRow.getId()}+'\')'"><i class="glyphicon glyphicon-trash"></i></a>
                                         </td>
@@ -162,7 +162,7 @@
                 label: 'Delete',
                 cssClass: 'btn-primary',
                 action: function (dialogItself) {
-                    var reqUrl = $('#contextPath').val() + "asset/delete/" + id;
+                    var reqUrl = $('#contextPath').val() + "service/delete/" + id;
                     $.ajax({
                         url: reqUrl,
                         method: 'GET',

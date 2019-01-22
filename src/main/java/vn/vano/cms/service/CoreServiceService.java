@@ -8,6 +8,7 @@ import vn.yotel.commons.bo.GenericBo;
 import java.util.List;
 
 public interface CoreServiceService extends GenericBo<CoreService, Long>{
-    Page<CoreService> findAllCoreService(String code, String name, Integer status, Pageable pageable);
+    Page<CoreService> findAllCoreService(String code, String name, Pageable pageable);
 
+    CoreService findCoreServiceById(Long id);
 }

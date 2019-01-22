@@ -26,6 +26,7 @@
                             <ul class="nav child_menu">
                                 <li><a th:href="@{/topup/index.html}">TOPUP đơn lẻ</a></li>
                                 <li sec:authorize="hasAnyAuthority('SADMIN')"><a th:href="@{/topup/by-file.html}">TOPUP theo danh sách</a></li>
+                                <li sec:authorize="hasAnyAuthority('SADMIN')"><a th:href="@{/topup/topup-list.html}">Danh sách TOPUP</a></li>
                             </ul>
                         </li>
                         <li>
@@ -40,7 +41,7 @@
                             <a><i class="fa fa-usd"></i>Quản lý dịch vụ<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li>
-                                    <a th:href="@{/service/service_list.html}">Danh sách</a>
+                                    <a th:href="@{/service/service-list.html}">Danh sách</a>
                                 </li>
                             </ul>
                         </li>

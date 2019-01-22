@@ -43,5 +43,9 @@ public interface Constants {
         public static final String ADD_SERVICE_ERROR = "Thêm mới dịch vụ thất bại";
 
         public static final String UPDATE_SERVICE_SUCCESS = "Cập nhật dịch vụ thành công";
+        public static final String UPDATE_SERVICE_ERROR = "Cập nhật dịch vụ thất bại";
+
+        public static final String DELETE_SERVICE_SUCCESS = "Xoá dịch vụ thành công";
+        public static final String DELETE_SERVICE_ERROR = "Xóa dịch vụ thất bại";
     }
 }

@@ -11,16 +11,15 @@ import vn.vano.cms.jpa.TopupSubs;
 
 import java.util.List;
 
-@Repository(value = "coreServiceRepo")
+//@Repository(value = "coreServiceRepo")
 public interface CoreServiceRepo extends JpaRepository<CoreService, Long> {
 
     @Query(value = "SELECT a FROM CoreService a WHERE (:code IS NULL OR :code ='' OR a.code LIKE CONCAT('%', :code, '%'))" +
-            "AND (:name IS NULL OR :name ='' OR a.name LIKE CONCAT('%', :name, '%'))" +
-            "AND a.status=:status", nativeQuery = false)
+            "AND (:name IS NULL OR :name ='' OR a.name LIKE CONCAT('%', :name, '%'))", nativeQuery = false)
     public Page<CoreService> findAllCoreService(@Param("code") String code,
                                           @Param("name") String name,
-                                          @Param("status") Integer status,
                                           Pageable pageable);
-    @Query(value = "SELECT a FROM CoreService a ", nativeQuery = false)
-    public List<CoreService> getAllCoreService();
+
+    @Query(value = "SELECT a FROM CoreService a WHERE a.id = :id", nativeQuery = false)
+    public CoreService getCoreServiceById(@Param("id") Long id);
 }
