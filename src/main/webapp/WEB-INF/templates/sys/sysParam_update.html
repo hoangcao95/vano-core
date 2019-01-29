@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm mới dịch vụ</title>
+    <content th:replace="fragments/init :: head"></content>
+    <style type="text/css">
+        #errorMessage {
+            padding: 11px;
+        }
+
+        .btn-submit-form {
+            margin-left: 41.5%;
+        }
+    </style>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">  <!--COL-LG-12-->
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Cập nhật cấu hình</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form class="addForm" role="form" th:object="${sys}" th:action="@{/sys/sysParam-edit.html}" method="POST">
+                                <!--FORM-->
+                                <input type="hidden" name="id" th:field="*{id}">
+                                <input type="hidden" name="createdDate" th:field="*{createdDate}">
+                                <div class="alert alert-danger" id="errorMessage"
+                                     style="text-align:left; color: red; font-weight: bold; font-size: 13px;"
+                                     th:each="err: ${#fields.errors('*')}" th:text="${err}"></div>
+                                <div class="col-lg-1 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Mã tham số</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-xs-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" placeholder="Nhập mã tham số" name="key" th:field="*{key}" readonly = "true"/>
+                                    </div>
+                                </div>
+                                <!--ROW 1 COL 1-->
+                                <div class="col-lg-1 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Giá trị</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-xs-12">
+                                    <div class="form-group">
+                                        <input class="form-control"  placeholder="Nhập giá trị tham số" name="value" th:field="*{value}"/>
+                                    </div>
+                                </div>
+                                <!--ROW 1 COL 2-->
+                                <div class="col-lg-1 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Loại</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-xs-12">
+                                    <div class="form-group">
+                                        <input class="form-control" rows="2" placeholder="Nhập loại tham số" name="type" th:field="*{type}"/>
+                                    </div>
+                                </div>
+                                <!--ROW 2 COL 1-->
+                                <div class="col-lg-6 col-xs-12"></div>
+                                <!--ROW 2 COL 2-->
+                                <div class="col-xs-12 btn-submit-form">
+                                    <div class="form-group ">
+                                        <button type="submit" class="btn btn-info">Cập nhật</button>
+                                        <a th:href="@{/sys/sysParam-list.html}" class="btn btn-warning">Bỏ qua</a>
+                                    </div>
+                                </div>
+                            </form> <!--END FORM-->
+                        </div> <!--END COL-LG-12-->
+                    </div> <!--END CLASS ROW-->
+                </div>
+            </div>
+        </div> <!--END PAGE WRAPPER-->
+    </div>
+    <content th:replace="fragments/footer :: content"></content>
+</div>
+<content th:replace="fragments/init :: script"></content>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.extend($.fn.autoNumeric.defaults, {
+            aPad: 'false',
+            lZero: 'deny',
+            vMax: '999999999'
+        });
+    });
+    jQuery(function ($) {
+        $('#price').autoNumeric('init');
+    });
+</script>
+
+
+<script type="text/javascript">
+    $('#inputBuyDate').daterangepicker({
+        "singleDatePicker": true,
+        "linkedCalendars": false,
+        "showDropdowns": true,
+        "showCustomRangeLabel": false,
+        format: 'DD/MM/YYYY',
+        "opens": "center"
+    }, function (start, end, label) {
+    });
+</script>
+
+<script>
+    $("#errorMessage").hide().fadeIn(0).delay(1000).fadeOut(500);
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.addForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Tên dịch vụ bắt buộc phải nhập'
+                        }
+                    }
+                },
+                code: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Mã dịch vụ bắt buộc phải nhập'
+                        }
+                    }
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

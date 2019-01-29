@@ -48,4 +48,16 @@ public interface Constants {
         public static final String DELETE_SERVICE_SUCCESS = "Xoá dịch vụ thành công";
         public static final String DELETE_SERVICE_ERROR = "Xóa dịch vụ thất bại";
     }
+
+    public interface SysParam {
+
+        public static final String ADD_SYS_SUCCESS = "Thêm mới tham số thành công";
+        public static final String ADD_SYS_ERROR = "Thêm mới tham số thất bại";
+
+        public static final String UPDATE_SYS_SUCCESS = "Cập nhật tham số thành công";
+        public static final String UPDATE_SYS_ERROR = "Cập nhật tham số thất bại";
+
+        public static final String DELETE_SYS_SUCCESS = "Xoá tham số thành công";
+        public static final String DELETE_SYS_ERROR = "Xóa tham số thất bại";
+    }
 }

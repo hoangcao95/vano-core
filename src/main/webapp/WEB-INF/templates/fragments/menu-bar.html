@@ -19,6 +19,18 @@
                             <a><i class="fa fa-gears"></i>Hệ thống<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a th:href="@{/thread/list.html}">Quản lý tiến trình</a></li>
+                                <li>
+                                    <a><i class="fa fa-suitcase"></i>Quản lý dịch vụ<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a th:href="@{/service/service-list.html}">Danh sách dịch vụ</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-gear"></i>Cấu hình tham số hệ thống<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a th:href="@{/sys/sysParam-list.html}">Danh sách cấu hình</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                         <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN','TOPUP')">
@@ -38,12 +50,7 @@
                             </ul>
                         </li>
                         <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN')">
-                            <a><i class="fa fa-usd"></i>Quản lý dịch vụ<span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li>
-                                    <a th:href="@{/service/service-list.html}">Danh sách</a>
-                                </li>
-                            </ul>
+
                         </li>
                     </ul>
                 </div>
