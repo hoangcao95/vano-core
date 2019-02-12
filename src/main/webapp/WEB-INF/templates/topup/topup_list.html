@@ -87,7 +87,14 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Danh sách Topup</h2>
-
+                            <div class="pull-right btn-add-new">
+                                <a data-toggle="tooltip" title="Thêm Mới Topup" th:href="@{/topup/topup-add.html}"
+                                   class=" btn btn-submit "><i class="fa fa-plus"></i> Thêm Mới</a>
+                                <!--title="" in <a> necessary for mobile responsive-->
+                                <a data-toggle="tooltip" title="Upload File" th:href="@{/topup/topup-upload.html}"
+                                   class=" btn btn-submit "><i class="fa fa-file"></i> Upload</a>
+                                <!--title="" in <a> necessary for mobile responsive-->
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">

@@ -60,4 +60,7 @@ public interface Constants {
         public static final String DELETE_SYS_SUCCESS = "Xoá tham số thành công";
         public static final String DELETE_SYS_ERROR = "Xóa tham số thất bại";
     }
+
+    public static final String INSERT_SUCCESS_MESSAGE = "Insert dữ liệu thành công";
+    public static final String INSERT_FILE_ERROR_MESSAGE = "Insert file không thành công: dữ liệu bị trùng hoặc sai cấu trúc";
 }
