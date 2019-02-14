@@ -41,6 +41,16 @@
                                 <li sec:authorize="hasAnyAuthority('SADMIN')"><a th:href="@{/topup/topup-list.html}">Danh sách TOPUP</a></li>
                             </ul>
                         </li>
+                        <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN','TOPUP')">
+                            <a><i class="fa fa-users"></i>Chăm sóc khách hàng<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li>
+                                    <a th:href="@{/customer_care/search_sms.html}">
+                                        <i class="fa fa-fw fa-search"></i>Tra cứu MO/MT
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li>
                             <a><i class="fa fa-user"></i>Tài khoản<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd   http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <context:annotation-config/>
+    <!--<context:property-placeholder location="classpath:mysql.properties"/>-->
+    <!--<import resource="applicationContext-api-persistence.xml"/>-->
+    <!--<import resource="applicationContext.xml"/>-->
+    <!--<import resource="applicationContext-api-quartz.xml"/>-->
+    <!-- Auto scan the components -->
+    <context:component-scan base-package="vn.vano.cms">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!-- config url api for kpi -->
+    <bean id="restCallApp" class="vn.vano.cms.config.RestCallApp">
+        <!--<property name="host" value="http://10.54.10.7:8081/yomi"/>-->
+
+        <property name="host" value="http://localhost:8078/yomi"/>
+
+        <property name="mtUrl" value="/kpi/mt/daily"/>
+        <property name="prcUrl" value="/kpi/prc/daily"/>
+        <property name="vasgateUrl" value="/kpi/vasgate/daily"/>
+        <property name="bookApiUrl" value="/kpi/bibibook/daily"/>
+        <property name="chargeUrl" value="/kpi/charge/daily"/>
+        <property name="isdnUrl" value="/kpi/detectnumber/daily"/>
+        <property name="errorCodeUrl" value="/kpi/charge/error-statistics"/>
+        <property name="smshistoryUrl" value="/custcare/mt_history.html"/>
+        <property name="retrySmsUrl" value="/custcare/kpbt/resend_mt.html"/>
+        <property name="regisSubUrl" value="/custcare/kpbt/register.html"/>
+        <property name="calcelSubUrl" value="/custcare/kpbt/cancel.html"/>
+        <property name="listDenyUrl" value="/custcare/kpbt/blacklist/list.html"/>
+        <property name="searchDenyUrl" value="/custcare/kpbt/blacklist/search.html"/>
+        <property name="addDenyUrl" value="/custcare/kpbt/blacklist/add.html"/>
+        <property name="removeDenyUrl" value="/custcare/kpbt/blacklist/remove.html"/>
+        <property name="promotionSumUrl" value="/custcare/kpbt/promotion_sum.html"/>
+        <property name="promotionLogUrl" value="/custcare/kpbt/promotion_log.html"/>
+        <property name="promotionNumberMaxUrl" value="/yomiad/promotion_log_numberMax.html"/>
+        <property name="top10numberUrl" value="/yomiad/top10number.html"/>
+        <property name="reportControlMonthUrl" value="/yomiad/report_control_month.html"/>
+        <property name="reportListAwardUrl" value="/yomiad/report_list_award.html"/>
+    </bean>
+</beans>

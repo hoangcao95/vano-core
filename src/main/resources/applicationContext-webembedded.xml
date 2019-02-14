@@ -13,7 +13,7 @@
 
     <!--<bean id="mtQueue" class="java.util.concurrent.ConcurrentLinkedQueue" scope="singleton"/>-->
     <!--<bean id = "mtQueueNotifier" class="java.lang.Object" scope="singleton"/>-->
-
+    <import resource="applicationContext-api.xml"/>
     <beans profile="Development">
 
         <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
