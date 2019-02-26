@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Danh sách dịch vụ</title>
+    <content th:replace="fragments/init :: head"></content>
+    <style>
+        #not_found_message {
+            padding: 11px;
+        }
+
+        .btn-add-new {
+            margin-top: -7px;
+            margin-right: -1px;
+        }
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+        .text-align{
+            text-align: center;
+            padding-top: inherit;
+        }
+
+    </style>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <content th:replace="fragments/menu-bar :: content"></content>
+        <content th:replace="fragments/top-nav :: content"></content>
+        <div class="right_col" role="main" style="min-height: 100vh">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Tùy chọn tìm kiếm</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form role="form" th:action="@{/report/reportControlMonth.html}" method="GET">
+                                <div class="row">
+                                    <!--<input hidden="true" value="0" name="type" />-->
+                                    <div class="col-lg-3">
+                                        <label>Từ ngày - đến ngày</label>
+                                        <div class="input-prepend input-group">
+                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                            <input type="text" name = "from_date" id="from_date"  hidden="true" th:value="${from_date}"/>
+                                            <input type="text" name = "to_date" id ="to_date"  hidden="true"  th:value="${to_date}"/>
+                                            <input type="text" style="width: 100%" id="reservationtime" class="form-control span4"
+                                                    th:value="${from_date} + ' - ' + ${to_date}" readonly = "true"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label>Số điện thoại:  </label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">+84</span>
+                                            <input class="form-control" type="text" name="phone" id="phone" th:value="${phone}"/>
+                                        </div>
+                                        <label for="phone" style="color: red;"></label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>&nbsp;</label>
+                                        <div>
+                                            <button type="submit" class="btn btn-info">Xem chi tiết</button>
+                                            <a class="btn btn-info" download="sms_info.xls" href="#" onclick="return ExcellentExport.excel(this, 'tblCallsDetail', 'sms info');">Xuất file excel</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> <!--START CLASS ROW-->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div id="successMessage" th:class="${successMessage != null and #strings.startsWith(successMessage,'ERROR:')} ? 'alert alert-error' : 'alert alert-success'"
+                         th:if="${successMessage}" th:text="${successMessage != null and successMessage != ''} ? ${#strings.replace(successMessage,'ERROR:','')} : ''"></div>
+                    <div class="alert alert-danger" id="not_found_message"
+                         th:if="${not #strings.isEmpty(not_found_message)}" th:text="${not_found_message}" style="color: white">
+                    </div>
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Chi tiết báo cáo đối soát</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <label>Số lượt tải</label>
+                            <div class="table-responsive" style="overflow-x: scroll;">
+                                <table class="table table-striped table-bordered table-hover" id="tblCallsDetailControlMontth">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Số tiền</th>
+                                        <th>Số lượt tải</th>
+                                        <th>Tổng tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="list, iterStat : ${listData.listControlMonth}">
+                                        <td th:text="${iterStat.count}">1</td>
+                                        <td th:text="${list.amount}"></td>
+                                        <td th:text="${list.numSub}"></td>
+                                        <td th:text="${#numbers.formatDecimal(list.totalAmount, 0, 'COMMA', 0, 'POINT')}"></td>
+                                        <!--<td th:text="${listData.price}"></td>-->
+                                        <!--<td class="text-center">-->
+                                        <!--<a sec:authorize="hasAnyRole('ROLE_RETRY','ROLE_ADMIN')" type="button"-->
+                                        <!--class="btn btn-success btn-xs" href="#"-->
+                                        <!--th:href="@{/customer_care/{id}/{sdt}/retry(id=${data.id},sdt=${data.msisdn})}"-->
+                                        <!--title="Retry"><i class="fa fa-reply"> Gửi lại</i></a>-->
+                                        <!--</td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p></p>
+                            <label>Tổng tiền theo ngày</label>
+                            <div class="table-responsive" style="overflow-x: scroll;">
+                                <table class="table table-striped table-bordered table-hover" id="tblCallsDetailRevenueMonthly">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Ngày</th>
+                                        <th>Tổng tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="list, iterStat : ${listData.listRevenueMonthly}">
+                                        <td th:text="${iterStat.count}">1</td>
+                                        <td th:text="${list.date1}"></td>
+                                        <td th:text="${#numbers.formatDecimal(list.totalAmount, 0, 'COMMA', 0, 'POINT')}"></td>
+                                        <!--<td th:text="${listData.price}"></td>-->
+                                        <!--<td class="text-center">-->
+                                        <!--<a sec:authorize="hasAnyRole('ROLE_RETRY','ROLE_ADMIN')" type="button"-->
+                                        <!--class="btn btn-success btn-xs" href="#"-->
+                                        <!--th:href="@{/customer_care/{id}/{sdt}/retry(id=${data.id},sdt=${data.msisdn})}"-->
+                                        <!--title="Retry"><i class="fa fa-reply"> Gửi lại</i></a>-->
+                                        <!--</td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> <!--END PANEL BODY-->
+                    </div>     <!--END PANEL INFO-->
+
+                    <!--<content th:replace="fragments/panigator :: content(page = ${page})"></content>-->
+                </div>  <!--END COL-LG-12-->
+            </div><!--END CLASS ROW-->
+        </div>
+    </div>
+    <content th:replace="fragments/footer :: content"></content>
+</div>
+<content th:replace="fragments/init :: script"></content>
+<script type="text/javascript">
+    function deleteConfirm(id) {
+        BootstrapDialog.show({
+            title: 'Xác nhận xóa bỏ',
+            message: 'Bạn có chắc chắn muốn xóa không ? Bấm Delete để xác nhận.',
+            buttons: [{
+                label: 'Bỏ qua',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Delete',
+                cssClass: 'btn-primary',
+                action: function (dialogItself) {
+                    var reqUrl = $('#contextPath').val() + "service/delete/" + id;
+                    $.ajax({
+                        url: reqUrl,
+                        method: 'GET',
+                        data: {
+                            'id': id
+                        },
+                        success: function (response) {
+
+                        }
+                    }).always(function (ketqua) {
+                        window.location.reload();
+                    });
+                }
+            }]
+        });
+    }
+</script>
+
+<script src="js/jquery-1.10.2.js" th:src="@{/resources/sb-admin-v2/js/jquery-1.10.2.js}"></script>
+<script src="js/bootstrap.min.js" th:src="@{/resources/sb-admin-v2/js/bootstrap.min.js}"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"
+        th:src="@{/resources/sb-admin-v2/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+
+<!-- Page-Level Plugin Scripts - Dashboard -->
+<script src="js/plugins/morris/raphael-2.1.0.min.js"
+        th:src="@{/resources/sb-admin-v2/js/plugins/morris/raphael-2.1.0.min.js}"></script>
+<script src="js/plugins/morris/morris.js" th:src="@{/resources/sb-admin-v2/js/plugins/morris/morris.js}"></script>
+<!-- Page-Level Plugin Scripts - Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"
+        th:src="@{/resources/sb-admin-v2/js/plugins/dataTables/jquery.dataTables.js}"></script>
+<!-- Page-Level Plugin Scripts - Tables -->
+<script src="../js/plugins/dataTables/dataTables.bootstrap.js"
+        th:src="@{/resources/sb-admin-v2/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script src="js/sb-admin.js" th:src="@{/resources/sb-admin-v2/js/sb-admin.js}"></script>
+
+<!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
+<script type="text/javascript" src="bootstrap-daterangepicker/moment.js"
+        th:src="@{/resources/bootstrap-daterangepicker/moment.js}"></script>
+<script type="text/javascript" src="bootstrap-daterangepicker/daterangepicker.js"
+        th:src="@{/resources/bootstrap-daterangepicker/daterangepicker.js}"></script>
+<!-- form validate -->
+<script src="/resources/jquery-validation-1.13.1/jquery.validate.min.js"
+        th:src="@{/resources/jquery-validation-1.13.1/jquery.validate.min.js}"></script>
+<script src="/resources/jquery-validation-1.13.1/additional-methods.min.js"
+        th:src="@{/resources/jquery-validation-1.13.1/additional-methods.min.js}"></script>
+<script src="/resources/jquery-validation-1.13.1/jquery-ui.min.js"
+        th:src="@{/resources/jquery-validation-1.13.1/jquery-ui.min.js}"></script>
+<!-- export data -->
+<script src="js/plugins/dataTables/excellentexport.min.js"
+        th:src="@{/resources/sb-admin-v2/js/plugins/dataTables/excellentexport.min.js}"></script>
+<script>
+    function copyConfirm(id) {
+        BootstrapDialog.show({
+            title: 'Xác nhận sao chép dữ liệu',
+            message: 'Bạn có muốn sao chép dữ liệu người dùng hiện tại? Bấm Accept để sao chép',
+            buttons: [{
+                label: 'Bỏ qua',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Accept',
+                cssClass: 'btn-primary',
+                action: function (dialogItself) {
+                    var copyUrl = $('#contextPath').val() + "asset/asset-copy.html" + id;
+                    $.ajax({
+                        url: copyUrl,
+                        method: 'GET',
+                        data: {
+                            'id': id
+                        },
+                        success: function (response) {
+
+                        }
+                    }).always(function (ketqua) {
+                        window.location.href = 'asset-copy.html/' + id;
+                    });
+                }
+            }]
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#tblCallsDetailControlMontth').dataTable();
+        $('#tblCallsDetailRevenueMonthly').dataTable();
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#reservationtime').daterangepicker({
+            timePicker: false,
+            format: 'YYYY/MM/DD'
+        }, function(start, end, label) {
+            console.log('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            $('#from_date').val(start.format('YYYY-MM-DD'));
+            $('#to_date').val(end.format('YYYY-MM-DD'));
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $("#not_found_message").hide().fadeIn(0).delay(1000).fadeOut(500);
+</script>
+</body>
+</html>
