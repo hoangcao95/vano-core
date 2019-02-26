@@ -28,7 +28,7 @@
         <property name="chargeUrl" value="/kpi/charge/daily"/>
         <property name="isdnUrl" value="/kpi/detectnumber/daily"/>
         <property name="errorCodeUrl" value="/kpi/charge/error-statistics"/>
-        <property name="smshistoryUrl" value="/custcare/mt_history.html"/>
+        <property name="smshistoryUrl" value="/custcare/kpbt/mt_history.html"/>
         <property name="retrySmsUrl" value="/custcare/kpbt/resend_mt.html"/>
         <property name="regisSubUrl" value="/custcare/kpbt/register.html"/>
         <property name="calcelSubUrl" value="/custcare/kpbt/cancel.html"/>
@@ -36,8 +36,8 @@
         <property name="searchDenyUrl" value="/custcare/kpbt/blacklist/search.html"/>
         <property name="addDenyUrl" value="/custcare/kpbt/blacklist/add.html"/>
         <property name="removeDenyUrl" value="/custcare/kpbt/blacklist/remove.html"/>
-        <property name="promotionSumUrl" value="/custcare/kpbt/promotion_sum.html"/>
-        <property name="promotionLogUrl" value="/custcare/kpbt/promotion_log.html"/>
+        <property name="promotionSumUrl" value="/custcare/kpbt/new/promotion_sum.html"/>
+        <property name="promotionLogUrl" value="/custcare/kpbt/new/promotion_log.html"/>
         <property name="promotionNumberMaxUrl" value="/yomiad/promotion_log_numberMax.html"/>
         <property name="top10numberUrl" value="/yomiad/top10number.html"/>
         <property name="reportControlMonthUrl" value="/yomiad/report_control_month.html"/>

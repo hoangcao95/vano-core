@@ -41,12 +41,38 @@
                                 <li sec:authorize="hasAnyAuthority('SADMIN')"><a th:href="@{/topup/topup-list.html}">Danh sách TOPUP</a></li>
                             </ul>
                         </li>
-                        <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN','TOPUP')">
+                        <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN','REPORT')">
+                            <a><i class="fa fa-users"></i>Báo cáo<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li>
+                                    <a><i class="fa fa-fw fa-search"></i>CTKM
+                                        <ul class="nav child_menu">
+                                            <li><a th:href="@{/report/promotion-sum.html}">Báo cáo giải thưởng</a></li>
+                                            <li><a th:href="@{/report/reportListAward.html}">Giải tuần/tháng</a></li>
+                                        </ul>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-fw fa-search"></i>Đối soát
+                                        <ul class="nav child_menu">
+                                            <li><a th:href="@{/report/reportControlMonth.html}">Báo cáo đối soát</a></li>
+                                            <li><a th:href="@{/report/reportListAward.html}">Báo cáo sản lượng/doanh thu ngày</a></li>
+                                        </ul>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="hasAnyAuthority('SADMIN','ADMIN','CSKH')">
                             <a><i class="fa fa-users"></i>Chăm sóc khách hàng<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li>
-                                    <a th:href="@{/customer_care/search_sms.html}">
+                                    <a th:href="@{/customer_care/search-sms.html}">
                                         <i class="fa fa-fw fa-search"></i>Tra cứu MO/MT
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/customer_care/promotion-log.html}">
+                                        <i class="fa fa-fw fa-search"></i>Lịch sử đặt số
                                     </a>
                                 </li>
                             </ul>

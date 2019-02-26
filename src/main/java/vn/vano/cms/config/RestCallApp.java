@@ -3,6 +3,7 @@ package vn.vano.cms.config;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -17,7 +18,7 @@ public class RestCallApp {
     private String chargeUrl = "/kpi/chart/daily";
     private String isdnUrl = "/kpi/detectnumber/daily";
     private String errorCodeUrl = "/kpi/test";
-    private String smshistoryUrl = "/custcare/mt_history.html";
+    private String smshistoryUrl = "/custcare/kpbt/mt_history.html";
     private String retrySmsUrl = "/custcare/resend_mt.html";
     private String regisSubUrl = "/custcare/resend_mt.html";
     private String calcelSubUrl = "/custcare/resend_mt.html";
@@ -25,8 +26,8 @@ public class RestCallApp {
     private String searchDenyUrl = "/custcare/resend_mt.html";
     private String addDenyUrl = "/custcare/resend_mt.html";
     private String removeDenyUrl = "/custcare/resend_mt.html";
-    private String promotionSumUrl = "/custcare/promotion_sum.html";
-    private String promotionLogUrl = "/custcare/promotion_log.html";
+    private String promotionSumUrl = "/custcare/kpbt/new/promotion_sum.html";
+    private String promotionLogUrl = "/custcare/kpbt/new/promotion_log.html";
     private String promotionNumberMaxUrl = "/yomiad/promotion_log_numberMax.html";
     private String top10numberUrl = "/yomiad/top10number.html";
     private  String reportControlMonthUrl = "/yomiad/report_control_month.html";
@@ -217,20 +218,21 @@ public class RestCallApp {
      * @param enddate
      * @return
      */
-    public RestMessage postPromotionSum(String startdate, String enddate) {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-        map.add("startdate", startdate);
-        map.add("enddate", enddate);
-        restTemplate = new RestTemplate();
-        String uri = this.host + promotionSumUrl;
-        String strMessage = restTemplate.postForObject(uri, map, String.class);
-        logger.info(strMessage);
+    public RestMessage postPromotionSum(String startdate, String enddate, String numPage) {
         RestMessage restMessage = null;
         try {
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+            map.add("startdate", startdate);
+            map.add("enddate", enddate);
+            map.add("numPage", numPage);
+            restTemplate = new RestTemplate();
+            String uri = this.host + promotionSumUrl;
+            String strMessage = restTemplate.postForObject(uri, map, String.class);
+            logger.info(strMessage);
             restMessage = (RestMessage) mapper.readValue(strMessage, RestMessage.class);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            logger.error(e.toString());
+            logger.error("", e);
         }
         return restMessage;
     }
@@ -241,11 +243,12 @@ public class RestCallApp {
      * @param enddate
      * @return
      */
-    public RestMessage postPromotionLog(String startdate, String enddate, String msisdn) {
+    public RestMessage postPromotionLog(String startdate, String enddate, String msisdn, String numPage) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         map.add("startdate", startdate);
         map.add("enddate", enddate);
         map.add("msisdn", msisdn);
+        map.add("numPage", numPage);
         restTemplate = new RestTemplate();
         String uri = this.host + promotionLogUrl;
         logger.info("postPromotionLog.uri: {}", uri);
